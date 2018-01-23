@@ -17,6 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   response.sendFile('./public/index.html');
 // });
 
+app.get('/test', (req, res) => res.send('hello world'));
+
 app.get('/db/person', function (request, response) {
   client.query('SELECT * FROM persons;')
     .then(function (data) {
