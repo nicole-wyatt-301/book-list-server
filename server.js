@@ -11,10 +11,12 @@ client.connect();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 // app.use(express.static('./public'));
 // app.get('/', function(request, response) {
 //   response.sendFile('./public/index.html');
 // });
+
 app.get('/db/person', function (request, response) {
   client.query('SELECT * FROM persons;')
     .then(function (data) {
@@ -46,6 +48,8 @@ createTable();
 app.listen(PORT, () => {
   console.log(`currently listening on ${PORT}`);
 });
+
+
 function createTable() {
   client.query(`
     CREATE TABLE IF NOT EXISTS persons(
@@ -58,4 +62,4 @@ function createTable() {
     .then(function (response) {
       console.log('created table in db!!!!');
     });
-};
+}
