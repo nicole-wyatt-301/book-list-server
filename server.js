@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/test', (req, res) => res.send('hello world'));
 
 app.get('/api/v1/books', function (request, response) {
-  client.query('SELECT * FROM persons;')
+  client.query('SELECT * FROM books;')
     .then(function (data) {
       response.send(data);
     })
@@ -25,13 +25,14 @@ app.get('/api/v1/books', function (request, response) {
     });
 });
 
-// 
+
 app.post('/api/v1/books', function (request, response) {
   client.query(`
-    INSERT INTO books(author, title, isbn, image_url, description)
-    VALUES($1, $2, $3, $4, $5);
+    INSERT INTO books(books_id, author, title, isbn, image_url, description)
+    VALUES($1, $2, $3, $4, $5, $6);
     `,
     [
+      request.params.id,
       request.body.author,
       request.body.title,
       request.body.isbn,
@@ -40,6 +41,7 @@ app.post('/api/v1/books', function (request, response) {
     ]
   )
     .then(function (data) {
+      console.log('table created');
       response.redirect('/');
     })
     .catch(function (err) {
