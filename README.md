@@ -21,12 +21,12 @@ This is a mobile application that dynamically generates a list of books from Goo
 3. JavaScript(the functionality of our app)
 4. SQL (database management)
 ### Libraries Used:
-Handlebars JS (templating)
-jQuery (DOM traversal, selection, and manipulation)
-Postgres (band end management)
+1. Handlebars JS (templating)
+2. jQuery (DOM traversal, selection, and manipulation)
+3. Postgres (band end management)
 ### Frameworks Used (Back end management)
-Node JS
-Express
+1. Node JS
+2. Express
 
 ## Change Log
 
