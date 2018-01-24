@@ -15,6 +15,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/test', (req, res) => res.send('hello world'));
 
+app.get('/api/v1/books/:id', (request, response, next) => {
+  console.log(request.params.id);
+  next();
+}, function(req, res, next) {
+  
+  client.query(`
+  SELECT * FROM books WHERE books_id = ${res.id};
+`)
+    .then(result => res.send(result.rows))
+    .catch(console.error);
+
+});
+  
+
 app.get('/api/v1/books', function (request, response) {
   client.query('SELECT books_id, title, author, image_url FROM books;')
     .then(function (data) {
