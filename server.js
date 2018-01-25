@@ -17,9 +17,7 @@ app.get('/test', (req, res) => res.send('hello world'));
 
 app.get('/api/v1/books/:id', (request, response) => {
   console.log(request.params.id);
-  client.query(`
-  SELECT * FROM books WHERE books_id = ${request.params.id};
-`)
+  client.query(`SELECT author, title, image_url, isbn, description FROM books WHERE books_id = ${request.params.id};`)
     .then(result => response.send(result.rows))
     .catch(console.error);
 });
@@ -38,7 +36,7 @@ app.get('/api/v1/books', function (request, response) {
 
 app.post('/api/v1/books', function (request, response) {
   client.query(`
-    INSERT INTO books(books_id, author, title, isbn, image_url, "description")
+    INSERT INTO books(books_id, author, title, isbn, image_url, description)
     VALUES($1, $2, $3, $4, $5, $6);
     `,
     [
@@ -66,12 +64,14 @@ app.listen(PORT, () => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile('index.html', {root: './book-list-client'})
+  res.sendFile('index.html', {root: '../book-list-client'})
 })
 
-//  THIS WAS USED ONCE TO LOAD FILL DATABASE WITH THE BOOKS TABLE, THIS ONLY NEEDS TO OCCUR ONCE OR IF THE DATABASE IS DELETED SO WE COMMENTED IT OUT FOR FUTURE USAGE.
-// ////// ** DATABASE LOADERS ** ////////
-// //////////////////////////////////////
+// createTable();
+
+// //  THIS WAS USED ONCE TO LOAD FILL DATABASE WITH THE BOOKS TABLE, THIS ONLY NEEDS TO OCCUR ONCE OR IF THE DATABASE IS DELETED SO WE COMMENTED IT OUT FOR FUTURE USAGE.
+// // ////// ** DATABASE LOADERS ** ////////
+// // //////////////////////////////////////
 // function loadBooks() {
 //   fs.readFile('../book-list-client/data/books.json', (err, fd) => {
 //     JSON.parse(fd.toString()).forEach(ele => {
