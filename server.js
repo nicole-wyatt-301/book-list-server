@@ -59,16 +59,19 @@ app.post('/api/v1/books', function (request, response) {
     });
 });
 
-createTable();
+//createTable();
 
 app.listen(PORT, () => {
   console.log(`currently listening on ${PORT}`);
 });
 
+app.get('*', (req, res) => {
+  res.sendFile('index.html', {root: './book-list-client'})
+})
 
-// THIS WAS USED ONCE TO LOAD FILL DATABASE WITH THE BOOKS TABLE, THIS ONLY NEEDS TO OCCUR ONCE OR IF THE DATABASE IS DELETED SO WE COMMENTED IT OUT FOR FUTURE USAGE.
-//////// ** DATABASE LOADERS ** ////////
-////////////////////////////////////////
+//  THIS WAS USED ONCE TO LOAD FILL DATABASE WITH THE BOOKS TABLE, THIS ONLY NEEDS TO OCCUR ONCE OR IF THE DATABASE IS DELETED SO WE COMMENTED IT OUT FOR FUTURE USAGE.
+// ////// ** DATABASE LOADERS ** ////////
+// //////////////////////////////////////
 // function loadBooks() {
 //   fs.readFile('../book-list-client/data/books.json', (err, fd) => {
 //     JSON.parse(fd.toString()).forEach(ele => {
