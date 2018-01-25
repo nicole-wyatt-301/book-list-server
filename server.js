@@ -15,24 +15,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/test', (req, res) => res.send('hello world'));
 
-app.get('/api/v1/books/:id', (request, response) => {
-  console.log(request.params.id);
-  client.query(`SELECT author, title, image_url, isbn, description FROM books WHERE books_id = ${request.params.id};`)
-    .then(result => response.send(result.rows))
-    .catch(console.error);
-});
-
-
+// this retrieves all book data, called by fetchAll (book.js) and triggers loadAll (book.js)
 app.get('/api/v1/books', function (request, response) {
   client.query('SELECT books_id, title, author, image_url FROM books;')
     .then(function (data) {
       response.send(data);
     })
     .catch(function (err) {
-      console.error(err);
+      console.error('get error', err);
     });
 });
 
+// this retrieves data about one single book, called by the fetchOne (book.js) and then triggers the loadOne function (book.js)
+app.get('/api/v1/books/:id', function (request, response) {
+  console.log(request.params.id);
+  client.query(`SELECT * FROM books WHERE books_id = ${request.params.id};`)
+    .then(function (data) {
+      console.log('data returned from server', data.rows);
+      response.send(data.rows)
+    })
+    .catch(function(err) {
+      console.error('get id error', err);
+    });
+});
 
 app.post('/api/v1/books', function (request, response) {
   client.query(`
@@ -53,7 +58,7 @@ app.post('/api/v1/books', function (request, response) {
       response.redirect('/');
     })
     .catch(function (err) {
-      console.error(err);
+      console.error('post error', err);
     });
 });
 
