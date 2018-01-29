@@ -61,7 +61,11 @@ app.post('/api/v1/books', function (request, response) {
       console.error('post error', err);
     });
 });
-
+app.delete('/api/v1/books', function (request, response) {
+  client.query(`
+  DELETE FROM books WHERE books_id = ${request.params.id};
+  `)
+})
 //createTable();
 
 app.listen(PORT, () => {
@@ -71,6 +75,7 @@ app.listen(PORT, () => {
 app.get('*', (req, res) => {
   res.sendFile('index.html', {root: '../book-list-client'})
 })
+
 
 // createTable();
 
